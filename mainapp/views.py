@@ -18,7 +18,7 @@ def products(request):
         products_context = json.load(products_json)
 
     for product in products_context:
-        product['pic'] = static(product['pic'])
+        product['image'] = static(product['image'])
 
     context = {
         'title': 'GeekShop - Каталог',
