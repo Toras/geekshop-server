@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.templatetags.static import static
+from mainapp.models import Product, ProductCategory
 import json
-from pathlib import Path
 
 # Create your views here.
 
@@ -22,6 +22,7 @@ def products(request):
 
     context = {
         'title': 'GeekShop - Каталог',
-        'products': products_context
+        'products': Product.objects.all(),
+        'categories': ProductCategory.objects.all()
     }
     return render(request, 'mainapp/products.html', context)
