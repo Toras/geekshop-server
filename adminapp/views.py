@@ -35,12 +35,6 @@ class UserUpdateView(UpdateView):
     form_class = UserAdminProfileForm
 
 
-# @user_passes_test(lambda u: u.is_superuser)
-# def admin_users_remove(request, user_id):
-#     user = User.objects.get(id=user_id)
-#     user.is_active = False
-#     user.save()
-#     return HttpResponseRedirect(reverse('admin_staff:admin_users_read'))
 class UserDeleteView(DeleteView):
     model = User
     template_name = 'adminapp/admin-users-update-delete.html'
