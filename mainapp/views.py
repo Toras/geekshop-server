@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 
 from mainapp.models import Product, ProductCategory
@@ -31,6 +31,12 @@ class ProductsList(ListView):
     model = Product
     template_name = 'mainapp/products.html'
     paginate_by = 3
+
+    def get_queryset(self):
+        if self.kwargs.get('pk'):
+            return super(ProductsList, self).get_queryset().filter(category_id=self.kwargs.get('pk')).order_by('name')
+        else:
+            return super(ProductsList, self).get_queryset()
 
     def get_context_data(self, **kwargs):
         context = super(ProductsList, self).get_context_data(**kwargs)
