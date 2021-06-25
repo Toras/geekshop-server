@@ -1,8 +1,11 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from authapp.models import User
 from basketapp.models import Basket
 
 
@@ -26,7 +29,8 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            send_verify_link(user)
             messages.success(request, 'Регистрация пользователя прошла успешно!')
             return HttpResponseRedirect(redirect_to=reverse('users:login'))
     else:
@@ -57,3 +61,21 @@ def profile(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(redirect_to=reverse('index'))
+
+
+def send_verify_link(user):
+    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+    subject = 'Account verify'
+    message = f'Your link for account activation: {settings.DOMAIN_NAME}{verify_link}'
+    send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
+
+def verify(request, email, key):
+    user = User.objects.filter(email=email).first()
+    if user and user.activation_key == key and not user.is_activation_key_expired():
+        user.is_active = True
+        user.activation_key = None
+        user.activation_key_created = None
+        user.save()
+        auth.login(request, user)
+    return render(request, 'authapp/verify.html')
