@@ -31,6 +31,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="small mb-1" for="{{ form.age.id_for_label }}">Возраст</label>
+                            {{ form.age }}
+                        </div>
+                    </div>
+                </div>
                 <div class="form-row mb-2">
                     <div class="col-lg-12">
                         <div class="custom-file">
@@ -49,6 +57,24 @@
                         <label class="small mb-1" for="{{ form.email.id_for_label }}">Адрес электронной
                             почты</label>
                         {{ form.email }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-lg-12">
+                        <label class="small mb-1" for="{{ profile_form.tagLine.id_for_label }}">Тэги</label>
+                        {{ profile_form.tagLine }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-lg-12">
+                        <label class="small mb-1" for="{{ profile_form.about_me.id_for_label }}">Обо мне</label>
+                        {{ profile_form.about_me }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-lg-12">
+                        <label class="small mb-1" for="{{ profile_form.gender.id_for_label }}">Пол</label>
+                        {{ profile_form.gender }}
                     </div>
                 </div>
                 <div class="form-row">
