@@ -99,4 +99,4 @@ class UserProfileEditForm(UserChangeForm):
 
     class Meta:
         model = UserProfile
-        fields = ('tagLine', 'about_me', 'gender',)
+        fields = ('tagLine', 'about_me', 'gender')

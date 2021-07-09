@@ -23,10 +23,10 @@ class UserProfile(models.Model):
     MALE = 'М'
     FEMALE = 'Ж'
 
-    GENDER_CHOICES = (
+    GENDER_CHOICES = [
         (MALE, 'М'),
         (FEMALE, 'Ж'),
-    )
+    ]
 
     user = models.OneToOneField(User, unique=True, null=False, db_index=True, on_delete=models.CASCADE)
     tagLine = models.CharField(verbose_name='тэги', max_length=128, blank=True)
