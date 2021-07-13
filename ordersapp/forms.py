@@ -16,6 +16,8 @@ class OrderEditForm(forms.ModelForm):
 
 
 class OrderItemEditForm(forms.ModelForm):
+    price = forms.CharField(label='цена, руб', required=False, disabled=True)
+
     class Meta:
         model = Order
         exclude = ()
