@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.views.generic.list import ListView
 
 from mainapp.models import Product, ProductCategory
+from django.conf import settings
+from django.core.cache import cache
 
 
 def index(request):
@@ -27,6 +29,19 @@ def index(request):
 #         products_paginator = paginator.page(paginator.num_pages)
 #     context.update({'products': products_paginator})
 #     return render(request, 'mainapp/products.html', context)
+
+def get_links_menu():
+    if settings.LOW_CACHE:
+        key = 'links_menu'
+        links_menu = cache.get(key)
+        if links_menu is None:
+            links_menu = ProductCategory.objects.all()
+            cache.set(key, links_menu)
+        return links_menu
+    else:
+        return ProductCategory.objects.all()
+
+
 class ProductsList(ListView):
     model = Product
     template_name = 'mainapp/products.html'
@@ -41,6 +56,6 @@ class ProductsList(ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductsList, self).get_context_data(**kwargs)
         context['title'] = 'GeekShop - Каталог'
-        context['categories'] = ProductCategory.objects.all()
+        context['categories'] = get_links_menu()  # ProductCategory.objects.all()
 
         return context
