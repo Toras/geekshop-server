@@ -10,6 +10,9 @@ from basketapp.models import Basket
 
 
 def login(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(redirect_to=reverse('index'))
+
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
@@ -67,7 +70,7 @@ def logout(request):
 
 
 def send_verify_link(user):
-    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+    verify_link = reverse('users:verify', args=[user.email, user.activation_key])
     subject = 'Account verify'
     message = f'Your link for account activation: {settings.DOMAIN_NAME}{verify_link}'
     send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
