@@ -24,8 +24,8 @@ ENV_DIR = BASE_DIR / '.env'
 SECRET_KEY = 'django-insecure-*+qbjt-yikhwj14vb6(hw5o)0ec2fv*16h_ov6mq!pn0+iwt57'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
